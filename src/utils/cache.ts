@@ -2,13 +2,21 @@ enum CacheType {
   Local,
   Session
 }
+
+function judge(value: any): boolean {
+  if (value === undefined || value === null) {
+    return false
+  }
+  return true
+}
+
 class Cache {
   storage: Storage
   constructor(Type: CacheType) {
     this.storage = Type === CacheType.Local ? localStorage : sessionStorage
   }
   setCache(key: string, value: any) {
-    if (value) {
+    if (judge(value)) {
       this.storage.setItem(key, JSON.stringify(value))
     }
   }

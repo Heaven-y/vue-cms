@@ -1,4 +1,4 @@
-declare interface IAccount {
+export interface IAccount {
   name: string
   password: string
 }

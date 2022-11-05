@@ -13,7 +13,6 @@ class MYRequest {
         return config
       },
       (err) => {
-        console.log('所有实例的请求拦截器： 请求失败拦截')
         return err
       }
     )
@@ -26,7 +25,6 @@ class MYRequest {
         return data
       },
       (err) => {
-        console.log('所有实例的响应拦截器： 响应失败拦截')
         return err
       }
     )
