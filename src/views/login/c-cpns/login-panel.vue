@@ -3,8 +3,8 @@
     <h1 class="title">后台管理系统</h1>
 
     <div class="tabs">
-      <!-- 帐号登录 -->
       <el-tabs type="border-card" stretch v-model="activeWays">
+        <!-- 帐号登录 -->
         <el-tab-pane name="account">
           <template #label>
             <el-icon><UserFilled /></el-icon>
@@ -52,8 +52,8 @@ const isRemPwd = ref<boolean>(localCache.getCache('isRemPwd') ?? false)
 watch(isRemPwd, (newValue) => {
   localCache.setCache('isRemPwd', newValue)
 })
-const accountRef = ref<InstanceType<typeof PaneAccount>>()
 
+const accountRef = ref<InstanceType<typeof PaneAccount>>()
 function handleLoginBtnClick() {
   if (activeWays.value === 'account') {
     accountRef.value?.loginAction(isRemPwd.value)
