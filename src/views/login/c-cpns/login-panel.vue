@@ -1,6 +1,6 @@
 <template>
   <div class="login-panel">
-    <h1 class="title">后台管理系统</h1>
+    <h1 class="title">水果铺子</h1>
 
     <div class="tabs">
       <el-tabs type="border-card" stretch v-model="activeWays">
@@ -26,7 +26,12 @@
 
     <div class="control">
       <el-checkbox v-model="isRemPwd" label="记住密码" />
-      <el-link type="primary">忘记密码</el-link>
+      <div class="control-right">
+        <el-link type="primary" class="register" @click="handleRegister">
+          注册帐号
+        </el-link>
+        <el-link type="primary">忘记密码</el-link>
+      </div>
     </div>
 
     <el-button
@@ -41,6 +46,7 @@
 </template>
 
 <script setup lang="ts">
+import router from '@/router'
 import { localCache } from '@/utils/cache'
 import { ref, watch } from 'vue'
 import PaneAccount from './pane-account.vue'
@@ -60,6 +66,10 @@ function handleLoginBtnClick() {
   } else {
     console.log('当前使用的是手机登录')
   }
+}
+
+function handleRegister() {
+  router.push('./register')
 }
 </script>
 
@@ -83,6 +93,12 @@ function handleLoginBtnClick() {
     display: flex;
     margin-top: 3px;
     justify-content: space-between;
+    .control-right {
+      padding-top: 4px;
+      .register {
+        margin-right: 5px;
+      }
+    }
   }
 
   .login-btn {
