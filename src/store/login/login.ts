@@ -1,19 +1,26 @@
+import { defineStore } from 'pinia'
 import {
   getUserInfoById,
   getUserMenuByRoleId,
   LoginRequest
 } from '@/service/login/login'
-import { defineStore } from 'pinia'
 import type { IAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 import { LOGIN_TOKEN } from '@/global/constans'
 import router from '@/router'
+import { mapMenusToRoutes } from '@/utils/map-menus'
+
+interface MyLoginStore {
+  token: string
+  userInfo: any
+  userMenus: any
+}
 
 const useLoginStore = defineStore('login', {
-  state: () => ({
+  state: (): MyLoginStore => ({
     token: '',
-    userInfo: localCache.getCache('userInfo') ?? {},
-    userMenus: localCache.getCache('userMenus') ?? []
+    userInfo: {},
+    userMenus: []
   }),
   actions: {
     async LoginAction(account: IAccount) {
@@ -39,7 +46,26 @@ const useLoginStore = defineStore('login', {
       localCache.setCache('userInfo', userInfo)
       localCache.setCache('userMenus', userMenus)
 
+      // 动态添加路由
+      const routes = mapMenusToRoutes(userMenus)
+      routes.forEach((route) => router.addRoute('main', route))
+
       router.push('/main')
+    },
+    // 刷新后的动作
+    loadLocalCacheAction() {
+      const token = localCache.getCache(LOGIN_TOKEN)
+      const userInfo = localCache.getCache('userInfo')
+      const userMenus = localCache.getCache('userMenus')
+      if (token && userInfo && userMenus) {
+        this.userInfo = userInfo
+        this.token = token
+        this.userMenus = userMenus
+
+        // 动态添加路由
+        const routes = mapMenusToRoutes(userMenus)
+        routes.forEach((route) => router.addRoute('main', route))
+      }
     }
   }
 })

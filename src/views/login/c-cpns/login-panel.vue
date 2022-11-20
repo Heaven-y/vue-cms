@@ -1,6 +1,6 @@
 <template>
   <div class="login-panel">
-    <h1 class="title">水果铺子</h1>
+    <h1 class="title">管理系统</h1>
 
     <div class="tabs">
       <el-tabs type="border-card" stretch v-model="activeWays">
